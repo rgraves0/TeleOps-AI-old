@@ -1,8 +1,8 @@
 import os
 
 from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
+from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
 SCOPES = [
@@ -29,12 +29,20 @@ def gmail_auth():
                 SCOPES
             )
 
-            creds = flow.run_local_server(port=0)
+            creds = flow.run_local_server(
+                port=8088,
+                open_browser=False
+            )
 
         with open("token.json", "w") as token:
             token.write(creds.to_json())
 
-    return build("gmail", "v1", credentials=creds)
+    return build(
+        "gmail",
+        "v1",
+        credentials=creds
+    )
+
 
 def get_latest_emails(limit=5):
     service = gmail_auth()
@@ -54,9 +62,12 @@ def get_latest_emails(limit=5):
             id=msg["id"]
         ).execute()
 
-        output.append(data.get("snippet", ""))
+        output.append(
+            data.get("snippet", "")
+        )
 
     return output
+
 
 def search_emails(query, limit=5):
     service = gmail_auth()
@@ -77,6 +88,8 @@ def search_emails(query, limit=5):
             id=msg["id"]
         ).execute()
 
-        output.append(data.get("snippet", ""))
+        output.append(
+            data.get("snippet", "")
+        )
 
     return output
