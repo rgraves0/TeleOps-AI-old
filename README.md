@@ -74,7 +74,7 @@ Built for low-resource VPS environments like Oracle Cloud Free Tier (AMD VM 1GB 
 ## Add Event
 
 ```bash
-/event 2026-05-10 Wifey ❤️ Birthday
+/event 2026-05-10 Birthday is comming!
 ```
 
 ---
